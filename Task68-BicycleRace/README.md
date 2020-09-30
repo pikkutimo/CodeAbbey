@@ -1,4 +1,4 @@
-[#Bicycle Race](https://www.codeabbey.com/index/task_view/bicycle-race)
+[Bicycle Race](https://www.codeabbey.com/index/task_view/bicycle-race)
 
 Two bicyclist start moving from different cities heading to meet each other somewhere in the middle (not exactly since they travel with different speed).
 
