@@ -1,0 +1,143 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
+#include <algorithm>
+
+std::string solveSecret(std::vector<std::pair<std::string,int>>&, std::vector<std::string>&);
+bool sortByCorrectDigits(const std::pair<std::string,int>&, const std::pair<std::string,int>&);
+void findWrongDigits(std::vector<std::pair<std::string,int>>&, std::vector<std::string>&);
+
+int main(int argc, char* ergv[])
+{
+    std::string guess;
+    std::vector<std::pair<std::string, int>> guesses;
+    std::vector<std::string> answersWithZeroCorrect;  
+    std::ifstream file("data.txt");
+    std::string answer;
+    int correctDigits{0};
+
+    if (file.is_open())
+    {
+        std::getline(file, guess);
+
+        while(std::getline(file,guess))
+        {
+            std::stringstream str(guess);
+            str >> answer >> correctDigits;
+            if (correctDigits != 0)
+            {
+                guesses.emplace_back(std::make_pair(answer, correctDigits));
+            }
+            else
+            {
+                answersWithZeroCorrect.emplace_back(answer);
+            }
+            
+            
+        }
+
+        file.close();
+    }
+    else
+    {
+        std::cout << "Couldn't open the file." << std::endl;
+    }
+    
+    std::cout << solveSecret(guesses, answersWithZeroCorrect) << std::endl;
+
+    return 0;
+}
+
+std::string solveSecret(std::vector<std::pair<std::string,int>>& partialCorrects, std::vector<std::string>& wrongGuesses)
+{
+    int digit{0};
+    int counter{0};
+    char singleDigit;
+    std::string secret;
+    std::sort(partialCorrects.begin(), partialCorrects.end(), sortByCorrectDigits);
+    findWrongDigits(partialCorrects, wrongGuesses);
+
+    while(digit != 4)
+    {
+        for (auto& answer: partialCorrects)
+        {
+            if (answer.first[digit] == '*') continue;
+            else
+            {
+                std::cout << answer.first[digit];
+                counter++;
+                std::cout << " " << counter;
+                if (counter == 1 && answer.second == 1)
+                {
+                    singleDigit = answer.first[digit];
+                    answer.first = "****";
+                }
+                else if (counter > 1 && answer.first[digit] == singleDigit)
+                {
+                    counter = 1;
+                }
+            }
+        }
+        if (counter == 1)
+        {
+            secret += singleDigit;
+            digit++;
+        }
+        counter = 0;
+        std::cout << "\nCurrent secret: " << secret  << " " <<digit<< std::endl;
+        // digit++;
+    }
+    
+
+    return secret;
+}
+
+bool sortByCorrectDigits(const std::pair<std::string,int> &a, const std::pair<std::string,int> &b) 
+{ 
+    return (a.second < b.second); 
+}
+
+void findWrongDigits(std::vector<std::pair<std::string,int>>& partialCorrects, std::vector<std::string>& wrongGuesses)
+{
+    char replacement{'*'};
+
+    for (std::vector<std::pair<std::string, int>>::iterator itr = partialCorrects.begin(); itr != partialCorrects.end(); ++itr)
+    {
+        std::string answer = itr->first;
+        for (std::vector<std::string>::iterator it = wrongGuesses.begin(); it != wrongGuesses.end(); ++it)
+        {
+            std::string wrong = *it;
+            
+            for (int i = 0; i < 4; ++i)
+            {
+                if (answer[i] == wrong[i])
+                {
+                    itr->first[i] = replacement;
+                }
+            }
+        }
+    }
+
+    std::cout << std::endl;
+}
+
+18
+0237 0
+4003 2 *003 **03 ==> 
+6135 0
+7657 0
+0390 0
+5156 0
+2826 0
+3394 1 3394 3*94 3***
+6310 0                      ====> 3*03 ====> 3503
+3249 1 3249 3*49 3***
+4185 0
+4750 0
+9072 0
+8992 0
+3979 1 3979 3*79 3***
+2805 1 *805 **05 **0*
+1455 0

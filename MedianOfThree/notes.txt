@@ -1,0 +1,66 @@
+#include <algorithm>
+ 
+// inputs must be random-access iterators of doubles
+// Note: this function modifies the input range
+template <typename Iterator>
+double median(Iterator begin, Iterator end) {
+  // this is middle for odd-length, and "upper-middle" for even length
+  Iterator middle = begin + (end - begin) / 2;
+ 
+  // This function runs in O(n) on average, according to the standard
+  std::nth_element(begin, middle, end);
+ 
+  if ((end - begin) % 2 != 0) { // odd length
+    return *middle;
+  } else { // even length
+    // the "lower middle" is the max of the lower half
+    Iterator lower_middle = std::max_element(begin, middle);
+    return (*middle + *lower_middle) / 2.0;
+  }
+}
+ 
+#include <iostream>
+ 
+int main() {
+  double a[] = {4.1, 5.6, 7.2, 1.7, 9.3, 4.4, 3.2};
+  double b[] = {4.1, 7.2, 1.7, 9.3, 4.4, 3.2};
+ 
+  std::cout << median(a+0, a + sizeof(a)/sizeof(a[0])) << std::endl; // 4.4
+  std::cout << median(b+0, b + sizeof(b)/sizeof(b[0])) << std::endl; // 4.25
+ 
+  return 0;
+}
+
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+// Function to find the middle of three number 
+int middleOfThree(int a, int b, int c) 
+{ 
+    // x is positive if a is greater than b.  
+    // x is negative if b is greater than a. 
+    int x = a - b; 
+  
+    int y = b - c;  // Similar to x 
+    int z = a - c;  // Similar to x and y. 
+  
+    // Checking if b is middle (x and y both 
+    // are positive) 
+    if (x * y > 0) 
+        return b; 
+  
+    // Checking if c is middle (x and z both 
+    // are positive) 
+    else if (x * z > 0) 
+        return c; 
+    else
+        return a; 
+} 
+  
+// Driver Code 
+int main() 
+{ 
+    int a = 20, b = 30, c = 40; 
+    cout << middleOfThree(a, b, c); 
+    return 0; 
+} 

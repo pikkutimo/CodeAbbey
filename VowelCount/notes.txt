@@ -1,0 +1,17 @@
+Notes on the problem
+
+The only tricky thing here is the creation of some function, which will check whether the current letter is vowel or not. You should not do something like this:
+
+if (ch == 'a' || ch == 'e'
+    || ch == 'i' || ch == 'o'
+      || ch == 'u' || ch == 'y'
+        || ch == 'A' || ch == 'E'
+          || ch == 'I' || ch == 'O'
+            || ch == 'U' || ch == 'Y')
+Instead of such a long logical expression we'd better do the following:
+
+Convert the letter to the lower case (if it is in upper case) - or convert the whole string beforehand to avoid checking for different cases.
+Check whether the letter is presented in a string "aeiouy" - for example in C/C++ it could be done with
+
+if (strchr("aeiouy", ch) != NULL) ...
+This allows significantly reduce and simplify the code.

@@ -1,0 +1,23 @@
+https://en.wikipedia.org/wiki/Josephus_problem
+
+Bitwise
+The easiest way to find the safe position is by using bitwise operators. In this approach, shifting the most-significant set bit of n to the least significant bit will return the safe position.[11] Input must be a positive integer.
+
+n = 1 0 1 0 0 1
+
+n = 0 1 0 0 1 1
+
+    /**
+	 * 
+	 * @param n (41) the number of people standing in the circle
+	 * @return the safe position who will survive the execution 
+	 * ~Integer.highestOneBit(n*2)
+	 * Multiply n by 2, get the first set bit and take its complement
+	 * ((n<<1) | 1)
+	 * Left Shift n and flipping the last bit
+	 * ~Integer.highestOneBit(n*2) & ((n<<1) | 1) 
+	 * Bitwise And to copy bits exists in both operands.
+	 */
+	public int getSafePosition(int n) {
+		return ~Integer.highestOneBit(n*2) & ((n<<1) | 1);
+	}

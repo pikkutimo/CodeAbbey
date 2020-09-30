@@ -1,0 +1,45 @@
+Expected answer 0 0 0 0 1 1 1 1 1 1 0 0 1 1 0 1 1 1 0 1
+                0 0 0 0 1 1 1 1 1 1 0 0 1 1 0 1 1 1 0 1
+Given answer    0 0 0 0 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 1
+
+20
+
+( ( ){[ ]e}< <a>[{e}x]>)()(){<c>t}<{b}/>{(w)-}{f})[<f>f(a(w)x]<c>
+(^)(</>[ (/)]{{f}d}< f]{(b)e<f>}c>[[<h>([ ]u)(t)w<w>]t<f>][( )u])
+{}{y{<[d]a>b}</>[u]{z}}<a [t(g)(x)[[f]w][^]{t}]
+<{f}>{(%)<e>(z{c}) ([*]c)-[v]](d{%}<*>)%}{{ }h}<w>[{(e){*}g}%]
+((x)y)[<[b]<d[t]>[<g><c>(v) ][f]<+>(f)t[(*)u]{d}{y}>]
+{<{f}<z{t}>c{d}>z}[g]()[z]{*}<d>(d< >)({b}-)
+<({(^) (d)}{*}b)>(x)<d<^[v](z)>[/][y]>{ }<{*}-[b]{/}><%><-( )>
+( ){^}{<t{b}>[{^}{+}a[v]][g]^(f){w}}([*]){*}
+<^>[<z>[g]]{%(-[t{(v{d})w}]<g>(d){y}[[x(y[x])(x)] ])( )}
+( )<( )+>{<+><[/{(g<g>)[y]d[t]}]b<a>>}<{u{t}(w)} {-}>
+{*}<>(f[<])</{(%)y}[g]>[z(-)[[a[+]]a]{<f>{+}(e) }[x]% >(v<*>)]
+{<c><<{><g>g{h}>{<a>(a)w}{^}(b)%}<w<x>>[]{ct<e>}<v>-}{x}
+<+<[v]e>><[w[^<< >c>{x}(*)]{+}][(( )c)a]>
+<< >+<b>{ }<%< >>[u]{*}>(h){%[t]<->}{y}{[ ](u)/}[(v)]{[u]z}[v]
+(<c>(<f> )%}>a{z{g}<h><w{})<{<t>g(g)}/[%]>((g))
+<u((x)^)>[f{([g]h)z}<h><y><d>[-<y(v){h}>]]{<h>[y]<{<v>u}a>}
+((g))[(f) (d)][( ){<(a)^>f}e[b<a[c{e}]>]]{w}
+{g[<{{+}(c)v}(%)h{h[-]}<a>[g]><b>[y]+]<[b( )]g><x< >>}()[f](<b>e)
+{ {-}}<[x]({+}(u)+[d])(w) b[d<%><t>]{y}}<^>>[y](t)
+(((-){d}<d>{ (g)}<<g<g>(y)>{h}(a{*})v<{-}<h>(f)f>><z>g[<g> ]))
+
+Notes on the problem
+
+There could be different approaches to this task, but most effective is to use the stack data structure 
+(for example Python lists could work as stack with .append() and .pop() methods).
+
+With it the algorithm becames straightforward:
+
+loop through all characters of a string sequentially;
+skip non-bracket characters, they are not interesting;
+if you found an opening bracket, push it to the stack;
+if you found a closing bracket, pop the character from the stack.
+To verify correctness of the bracket sequence, check the following conditions:
+
+Every character popped out should correspond to current character from sequence. I.e. if the current character is the ")"
+then the character on the top of the stack which you will pop should be "(".
+If you need to pop a character but stack is empty - it is obviously signal of an error in the sequence.
+When you will finish the sequence, the stack should appear empty - otherwise it is the error of having more opening brackets 
+than closing ones.

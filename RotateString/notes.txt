@@ -1,0 +1,16 @@
+Author's notes on this problem
+Though the task could be written in a single line using cool string manipulation functions in Python and similar languages, of course it is a kind of cheating: really you are creating new string consisting of two parts of old one.
+
+Proper challenge arose when you will try to rotate the string "in place", i.e. without creating new one, only substituting characters in it.
+
+Good approach is to revert the string twice - around the center and then around some other point so that you will get the nicely rotated string:
+
+Rotate by 6 letters:
+
+initial: A B C D E F G H I J K L M N O P
+
+1st rev: P O N M L K J I H G F E D C B A
+                        ^-- center 1
+2nd rev: K L M N O P A B C D E F G H I J
+              ^-- center 2
+The only trick is therefore to find out the position of the second center :)
